@@ -46,3 +46,38 @@ console.log(flattenArray(nested));
  *  Problem 3
  * 
  */
+
+function adjustName(company) {
+    const fname = company.name[0];
+    const lName = company.name[1];
+
+    if (company.name.length === 3) {
+        const mName = company.name[1];
+        company.firstName = fname;
+        company.middleName = mName;
+        company.lastName = lName;
+        delete company.name;
+
+    } else {
+
+        company.firstName = fname;
+        company.lastName = lName;
+
+        delete company.name;
+    }
+
+    return company;
+}
+
+const dc = {
+    name: ['Bruce', 'Wayne'],
+    hero: 'Batman'
+};
+
+const marvel = {
+    name: ['Peter', 'Benjamin', 'Parker'],
+    hero: 'SpiderMan'
+};
+
+console.log(adjustName(dc));
+console.log(adjustName(marvel))
