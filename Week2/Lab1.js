@@ -48,17 +48,21 @@ console.log(flattenArray(nested));
  */
 
 function adjustName(company) {
-    const fname = company.name[0];
-    const lName = company.name[1];
 
     if (company.name.length === 3) {
-        const mName = company.name[1];
+        const lastElem = company.name.length - 1;
+        let fname = company.name[0];
+        let lName = company.name[lastElem];
+
         company.firstName = fname;
-        company.middleName = mName;
         company.lastName = lName;
+
         delete company.name;
 
     } else {
+
+        let fname = company.name[0];
+        let lName = company.name[1];
 
         company.firstName = fname;
         company.lastName = lName;
