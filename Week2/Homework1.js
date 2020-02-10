@@ -69,23 +69,61 @@ const game_array = [
 console.log("PROBLEM 6: Convert To Object")
 console.log(convertToObject(game_array));
 
-// for (let i = 0; i < game_array.length; i++) {
-//     const innerValues = game_array[i].length;
-//     for (let j = 0; j < innerValues; j++) {
-//         console.log('[' + i + ',' + j + '] =' + game_array[i][j]);
-//     }
-// }
+// Problem 7: Build an Object
 
-// console.log(convertToObject(game_array));
+function buildObject(array) {
+    let productObject = {};
+    let prop = '';
+    let asgn = '';
 
-// let gameObject = {};
+    for (let i = 0; i < array.length; i++) {
+        const inner = array[i].length;
+        productObject[i + 1] = {};
+        for (let j = 0; j < inner; j++) {
+            const objValues = array[i][j]
+            prop = objValues.property;
+            asgn = objValues.assign;
+            productObject[i + 1][prop] = asgn;
+        }
+    }
 
-//     for (let i = 0; i < gameArray.length; i++) {
-//         gameObject[i + 1] = {};
-//         const innervalues = gameArray[i].length;
-//         for (let j = 0; j < innervalues; j++) {
-//             const { key, value } = gameArray[i][j];
-//             gameObject[i + 1][value] = key;
-//         }
-//     }
-//     return gameObject;
+    return productObject;
+}
+
+const products = [
+    [{
+        property: 'product',
+        assign: 'PS4'
+    }, {
+        property: 'company',
+        assign: 'Sony'
+    }, {
+        property: 'release',
+        assign: '2013'
+    }],
+
+    [{
+        property: 'product',
+        assign: 'Xbox One X'
+    }, {
+        property: 'company',
+        assign: 'Microsoft'
+    }, {
+        property: 'release',
+        assign: '2016'
+    }],
+
+    [{
+        property: 'product',
+        assign: 'Switch'
+    }, {
+        property: 'company',
+        assign: 'Nintendo'
+    }, {
+        property: 'release',
+        assign: '2017'
+    }]
+];
+
+console.log("PROBLEM 7: Build Object");
+console.log(buildObject(products));
