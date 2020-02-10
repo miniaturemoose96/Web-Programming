@@ -1,17 +1,43 @@
-// // Problem 4: Counting Letters
-// function countingLetters(quote, punctuations) {
-//     let letterCount = 0;
-//     let currentLetter = ''
-//     for (let i = 0; i < quote.length; i++) {
-//         currentLetter = quote[i].toLowerCase();
-//         if (currentLetter)
-//     }
-// }
+// Problem 4: Counting Letters
 
-// // Test Counting Letters
-// const quote = 'The greatest glory in living lies not in never falling, but in rising every time we fall.';
-// const punctuations = [' ', ',', '.', '?', '!', ';', ':', '"', "'"];
-// console.log(countingLetters(quote, punctuations));
+function countingLetters(quote, punctuations) {
+    let obj = {};
+    let key = '';
+    let value = 0;
+
+    // Remove Punctuations
+    let newQuote = '';
+    for (let i = 0; i < quote.length; i++) {
+        const char = quote[i].toLowerCase();
+        if (punctuations.includes(char)) {
+            newQuote = newQuote + '';
+        } else {
+            newQuote = newQuote + char;
+        }
+
+    }
+
+    // New Quote 
+    for (let i = 0; i < newQuote.length; i++) {
+        key = newQuote[i];
+        obj[key];
+
+        if (obj[key] == newQuote[i]) {
+            value;
+        } else {
+            value++;
+        }
+
+        obj[key] = value;
+    }
+
+    return obj;
+
+}
+
+const quote = 'The greatest glory in living lies not in never falling, but in rising every time we fall.';
+const punctuations = [' ', ',', '.', '?', '!', ';', ':', '"', "'"];
+console.log(countingLetters(quote, punctuations));
 
 
 // Problem 5: Compare Arrays
