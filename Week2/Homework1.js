@@ -37,14 +37,27 @@ const array_a1 = [1, 2, 3];
 const array_a2 = [1, 2, 3];
 const array_a3 = [1, 2, 3, 4];
 const array_a4 = [1, 3, 2, 4, 2];
+console.log("PROBLEM 5: Compare Arrays");
 console.log(compareArrays(array_a1, array_a2)); // OUTPUT: True
 console.log(compareArrays(array_a3, array_a4)); // OUTPUT: False
 
 
 // Problem 6: Convert to an Object
-// function convertToObject(gameArray) {
 
-// }
+function convertToObject(gameArray) {
+    let key = '';
+    let value = '';
+    let gameObject = {};
+    for (let i = 0; i < gameArray.length; i++) {
+        const inner = gameArray[i].length;
+        for (let j = 0; j < inner; j++) {
+            key = gameArray[i][0];
+            value = gameArray[i][1];
+        }
+        gameObject[key] = value;
+    }
+    return gameObject;
+}
 
 const game_array = [
     ['developer', 'Respawn'],
@@ -52,6 +65,9 @@ const game_array = [
     ['game', 'Star Wars Jedi: Fallen Order'],
     ['year', 2019]
 ]
+
+console.log("PROBLEM 6: Convert To Object")
+console.log(convertToObject(game_array));
 
 // for (let i = 0; i < game_array.length; i++) {
 //     const innerValues = game_array[i].length;
@@ -61,3 +77,15 @@ const game_array = [
 // }
 
 // console.log(convertToObject(game_array));
+
+// let gameObject = {};
+
+//     for (let i = 0; i < gameArray.length; i++) {
+//         gameObject[i + 1] = {};
+//         const innervalues = gameArray[i].length;
+//         for (let j = 0; j < innervalues; j++) {
+//             const { key, value } = gameArray[i][j];
+//             gameObject[i + 1][value] = key;
+//         }
+//     }
+//     return gameObject;
