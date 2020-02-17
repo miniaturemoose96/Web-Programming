@@ -2,37 +2,24 @@
 
 function countingLetters(quote, punctuations) {
     let obj = {};
-    let key = '';
-    let value = 0;
+    let rem_punct = '';
 
-    // Remove Punctuations
-    let newQuote = '';
-    for (let i = 0; i < quote.length; i++) {
-        const char = quote[i].toLowerCase();
+    let low_quote = quote.toLowerCase();
+    for (let i = 0; i < low_quote.length; i++) {
+        let char = low_quote[i];
+        // Check for punctuations remove and add to a new string
         if (punctuations.includes(char)) {
-            newQuote = newQuote + '';
+            // Skip This part
         } else {
-            newQuote = newQuote + char;
+            if (Object.keys(obj).includes(char)) {
+                obj[char] += 1;
+            } else {
+                obj[char] = 1;
+            }
         }
-
-    }
-
-    // New Quote 
-    for (let i = 0; i < newQuote.length; i++) {
-        key = newQuote[i];
-        obj[key];
-
-        if (obj[key] == newQuote[i]) {
-            value;
-        } else {
-            value++;
-        }
-
-        obj[key] = value;
     }
 
     return obj;
-
 }
 
 const quote = 'The greatest glory in living lies not in never falling, but in rising every time we fall.';
