@@ -51,9 +51,9 @@ const cookingWithCallbacks = (food, callback) => {
 }
 
 // Using the Callback
-// cookingWithCallbacks({ name: 'popcorn', time: 2000 }, (err, result) => {
-//     console.log(result)
-// })
+cookingWithCallbacks({ name: 'popcorn', time: 2000 }, (err, result) => {
+    console.log(result)
+})
 
 // Looping with Callbacks
 const makeFoodCallbacks = foods => {
@@ -138,4 +138,4 @@ const makeFoodAsync = foods => {
     })
 }
 
-makeFoodAsync(foods);
+//makeFoodAsync(foods);
