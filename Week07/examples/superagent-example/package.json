@@ -1,0 +1,14 @@
+{
+  "name": "superagent-example",
+  "version": "1.0.0",
+  "description": "Examples of superagent use cases",
+  "main": "example-request.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cydney Auman",
+  "license": "MIT",
+  "dependencies": {
+    "superagent": "^5.2.2"
+  }
+}
