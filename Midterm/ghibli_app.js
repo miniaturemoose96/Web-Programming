@@ -2,6 +2,41 @@ const figlet = require('figlet'); // adds ascii art headers
 const superagent = require('superagent');
 const inquirer = require('inquirer');
 
+// Helper to display data
+const _displayInformation = (response, category) => {
+    switch (category) {
+        case 'films':
+            figlet(`${response.title}`, {
+                font: 'Small',
+                horizontalLayout: 'default',
+                verticalLayout: 'default'
+            }, function(err, data) {
+                if (err) {
+                    console.log('Something went wrong...');
+                    console.dir(err);
+                    return;
+                }
+                console.log(data)
+            });
+
+            console.log(`Description: ${response.description}\n`);
+            console.log(`Release Year: ${response.release_date}\n`);
+            console.log(`Rating: ${response.rt_score}`);
+
+            break;
+        case 'people':
+            break;
+        case 'locations':
+            break;
+        case 'species':
+            break;
+        case 'vehicles':
+            break;
+        default:
+            break;
+    }
+};
+
 // Helper to display Id of items
 const _displayId = (response, category) => {
     switch (category) {
@@ -20,7 +55,7 @@ const _displayId = (response, category) => {
             });
 
             response.forEach(film => {
-                console.log(`Title: ${film.title}`);
+                console.log(`ID: ${film.id}, TITLE: ${film.title}`);
             });
             break;
 
@@ -39,19 +74,29 @@ const _displayId = (response, category) => {
             });
 
             response.forEach(elem => {
-                console.log(`Name: ${elem.name}`);
+                console.log(`ID: ${elem.id}, NAME: ${elem.name}`);
             });
             break;
     }
-}
+};
 
-// Allow user to search selected category item by id
-const _selectItemInCategory = (list) => {
+// Helper that will create a list of ID depending on category chosen
+// Pass this to inquirer select prompt to find out more info on selected
+const _idList = (response) => {
+    let listOfId = [];
+    response.forEach(elem => {
+        listOfId.push(elem.id);
+    });
+    return listOfId;
+};
+
+// Allow user to search selected category item by id list and display info
+const _selectItemInCategory = (listOfId) => {
     return inquirer.prompt([{
         type: 'rawlist',
         name: 'item',
         message: 'Select Item for more information.',
-        choices: list
+        choices: listOfId
     }]);
 };
 
@@ -76,10 +121,23 @@ async function search(category = 'films') {
     const choiceUrl = `${ghibli_base}/${category}`;
     const baseUrlResponse = await superagent.get(choiceUrl);
     // loop through the response and display
-    const items = baseUrlResponse.body;
-    _displayId(items, category)
+    const itemsResponse = baseUrlResponse.body;
+    _displayId(itemsResponse, category)
 
     // Select Item in chosen category depenging on choice
+    // Create id list depending on chosen then prompt user
+    const idList = _idList(itemsResponse);
+    const selectedId = await _selectItemInCategory(idList);
+    if (selectedId.item) {
+        // Open new connection to specified id info
+        // choice url keeps track of category 
+        const singleItemUrl = `${choiceUrl}/${selectedId.item}`;
+        const singleItemResponse = await superagent.get(singleItemUrl);
+        const singleItem = singleItemResponse.body;
+        // Call Info print helper for information 
+        _displayInformation(singleItem, category);
+    }
+
 };
 
 module.exports = {
