@@ -10,7 +10,7 @@ yargs
             return yargs
                 .options('c', {
                     alias: 'category',
-                    describe: 'Search films, people, locations, species and vehicles.'
+                    describe: 'use these categories: films, people, locations, species and vehicles.'
                 });
         },
         handler: argv => {
