@@ -15,7 +15,7 @@ const deck = async shuffle => {
 };
 
 // a function that allows n number of cards to be drawn from a specified deck
-const draw = async (deck_id, count) => {
+const draw = async(deck_id, count) => {
     const drawUrl = `${config.url}/${deck_id}/draw/?count=${count}`;
     try {
         const drawResponse = await superagent.get(drawUrl);

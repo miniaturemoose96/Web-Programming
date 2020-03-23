@@ -11,13 +11,11 @@ const _print = result => {
 
 // prompt the user by asking a Yes/No question to draw another card
 const _anotherCardPrompt = () => {
-    return inquirer.prompt([
-        {
-            type: 'confirm',
-            name: 'card',
-            message: 'would you like to draw another card?'
-        }
-    ]);
+    return inquirer.prompt([{
+        type: 'confirm',
+        name: 'card',
+        message: 'would you like to draw another card?'
+    }]);
 };
 
 // the draw which contains our programs logic
