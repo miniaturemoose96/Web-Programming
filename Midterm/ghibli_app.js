@@ -25,12 +25,79 @@ const _displayInformation = (response, category) => {
 
             break;
         case 'people':
+            figlet(`${response.name}`, {
+                font: 'Small',
+                horizontalLayout: 'default',
+                verticalLayout: 'default'
+            }, function(err, data) {
+                if (err) {
+                    console.log('Something went wrong...');
+                    console.dir(err);
+                    return;
+                }
+                console.log(data)
+            });
+
+            console.log(`Gender: ${response.gender}\n`);
+            console.log(`Age: ${response.age}\n`);
+            console.log(`Eye Color: ${response.eye_color}, Hair Color: ${response.hair_color}`);
+
             break;
         case 'locations':
+            figlet(`${response.name}`, {
+                font: 'Small',
+                horizontalLayout: 'default',
+                verticalLayout: 'default'
+            }, function(err, data) {
+                if (err) {
+                    console.log('Something went wrong...');
+                    console.dir(err);
+                    return;
+                }
+                console.log(data)
+            });
+
+            console.log(`Climate: ${response.climate}\n`);
+            console.log(`Terrain: ${response.terrain}\n`);
+            console.log(`Surface Water: ${response.surface_water}`);
             break;
         case 'species':
+            figlet(`${response.name}`, {
+                font: 'Small',
+                horizontalLayout: 'default',
+                verticalLayout: 'default'
+            }, function(err, data) {
+                if (err) {
+                    console.log('Something went wrong...');
+                    console.dir(err);
+                    return;
+                }
+                console.log(data)
+            });
+
+            console.log(`Classification: ${response.classification}\n`);
+            console.log(`Eye Colors: ${response.eye_colors}\n`);
+            console.log(`Hair Colors: ${response.hair_colors}`);
+
             break;
         case 'vehicles':
+            figlet(`${response.name}`, {
+                font: 'Small',
+                horizontalLayout: 'default',
+                verticalLayout: 'default'
+            }, function(err, data) {
+                if (err) {
+                    console.log('Something went wrong...');
+                    console.dir(err);
+                    return;
+                }
+                console.log(data)
+            });
+
+            console.log(`Description: ${response.description}\n`);
+            console.log(`Type: ${response.vehicle_class}\n`);
+            console.log(`Size: ${response.length}`);
+
             break;
         default:
             break;
@@ -54,14 +121,16 @@ const _displayId = (response, category) => {
                 console.log(data)
             });
 
+            let count_films = 0;
             response.forEach(film => {
-                console.log(`ID: ${film.id}, TITLE: ${film.title}`);
+                count_films += 1;
+                console.log(`${count_films}) ${film.title}....................ID: ${film.id},`);
             });
             break;
 
         default:
             figlet(`${category}`, {
-                font: 'small',
+                font: 'Small',
                 horizontalLayout: 'full',
                 verticalLayout: 'full'
             }, function(err, data) {
@@ -73,8 +142,10 @@ const _displayId = (response, category) => {
                 console.log(data)
             });
 
+            let count_elem = 0;
             response.forEach(elem => {
-                console.log(`ID: ${elem.id}, NAME: ${elem.name}`);
+                count_elem += 1;
+                console.log(`${count_elem}) ${elem.name}....................ID: ${elem.id}`);
             });
             break;
     }
@@ -95,7 +166,7 @@ const _selectItemInCategory = (listOfId) => {
     return inquirer.prompt([{
         type: 'rawlist',
         name: 'item',
-        message: 'Select Item for more information.',
+        message: '\nSelect Item for more information.',
         choices: listOfId
     }]);
 };
