@@ -5,11 +5,11 @@ const inquirer = require('inquirer');
 // Helper to display Id of items
 const _displayId = (response, category) => {
     switch (category) {
-        case 'film':
-            figlet(`Studio Ghibli: ${category}`, {
+        case 'films':
+            figlet(`${category}`, {
                 font: 'Small',
-                horizontalLayout: 'default',
-                verticalLayout: 'default'
+                horizontalLayout: 'full',
+                verticalLayout: 'full'
             }, function(err, data) {
                 if (err) {
                     console.log('Something went wrong...');
@@ -20,14 +20,15 @@ const _displayId = (response, category) => {
             });
 
             response.forEach(film => {
-                console.log(`Title: ${film.title}, id: ${film.id}`);
+                console.log(`Title: ${film.title}`);
             });
             break;
+
         default:
-            figlet(`Studio Ghibli: ${category}`, {
+            figlet(`${category}`, {
                 font: 'small',
-                horizontalLayout: 'default',
-                verticalLayout: 'default'
+                horizontalLayout: 'full',
+                verticalLayout: 'full'
             }, function(err, data) {
                 if (err) {
                     console.log('Something went wrong...');
@@ -36,9 +37,11 @@ const _displayId = (response, category) => {
                 }
                 console.log(data)
             });
+
             response.forEach(elem => {
-                console.log(`Name: ${elem.name}, id: ${elem.id}`);
+                console.log(`Name: ${elem.name}`);
             });
+            break;
     }
 }
 
@@ -57,9 +60,9 @@ const _selectItemInCategory = (list) => {
 async function search(category = 'films') {
     // Banner 
     figlet('Studio Ghibli API', {
-        font: 'Computer',
-        horizontalLayout: 'default',
-        verticalLayout: 'default'
+        font: 'Small',
+        horizontalLayout: 'fitted',
+        verticalLayout: 'fitted'
     }, function(err, data) {
         if (err) {
             console.log('Something went wrong...');
@@ -75,6 +78,8 @@ async function search(category = 'films') {
     // loop through the response and display
     const items = baseUrlResponse.body;
     _displayId(items, category)
+
+    // Select Item in chosen category depenging on choice
 };
 
 module.exports = {
