@@ -1,0 +1,17 @@
+{
+  "name": "midterm",
+  "version": "1.0.0",
+  "description": "Command Line interface to checkout Studio Ghibli movies API.",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alejandro Bernal",
+  "license": "MIT",
+  "dependencies": {
+    "figlet": "^1.3.0",
+    "inquirer": "^7.1.0",
+    "superagent": "^5.2.2",
+    "yargs": "^15.3.1"
+  }
+}
