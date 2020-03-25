@@ -2,32 +2,9 @@ const figlet = require('figlet'); // adds ascii art headers
 const superagent = require('superagent');
 const inquirer = require('inquirer');
 
-// Testing out if a dictionary is the answer to my problem
-// Focus only on using getting ID and TITLE/NAME keys from the objects
-// Save them in a dictionary with an easier title to search directly
-const _createDictionary = (response, category) => {
-    let objectList = []
-    if (category === 'films') {
-        response.forEach(film => {
-            const objItems = {};
-            const { id, title } = film;
-            objItems[title] = id;
-            objectList.push(objItems);
-        });
-    } else {
-        response.forEach(elem => {
-            const objItems = {};
-            const { id, name } = elem;
-            objItems[name] = id;
-            objectList.push(objItems);
-        });
-    }
-
-    return objectList;
-};
-
 // Helper to display data
 const _displayInformation = (response, category) => {
+
     switch (category) {
         case 'films':
             figlet(`${response.title}`, {
@@ -129,60 +106,67 @@ const _displayInformation = (response, category) => {
 };
 
 // Helper to display Id of items
-const _displayId = (response, category) => {
-    switch (category) {
-        case 'films':
-            figlet(`${category}`, {
-                font: 'Small',
-                horizontalLayout: 'full',
-                verticalLayout: 'full'
-            }, function(err, data) {
-                if (err) {
-                    console.log('Something went wrong...');
-                    console.dir(err);
-                    return;
-                }
-                console.log(data)
-            });
+// const _displayCategoryItems = (response, category) => {
+//     if (category === 'films') {
 
-            let count_films = 0;
-            response.forEach(film => {
-                count_films += 1;
-                console.log(`${count_films}) ${film.title}....................ID: ${film.id},`);
-            });
-            break;
+//         figlet(`${category}`, {
+//             font: 'Small',
+//             horizontalLayout: 'full',
+//             verticalLayout: 'full'
+//         }, function(err, data) {
+//             if (err) {
+//                 console.log('Something went wrong...');
+//                 console.dir(err);
+//                 return;
+//             }
+//             console.log(data)
+//         });
 
-        default:
-            figlet(`${category}`, {
-                font: 'Small',
-                horizontalLayout: 'full',
-                verticalLayout: 'full'
-            }, function(err, data) {
-                if (err) {
-                    console.log('Something went wrong...');
-                    console.dir(err);
-                    return;
-                }
-                console.log(data)
-            });
+//         let count_films = 0;
+//         response.forEach(film => {
+//             count_films += 1;
+//             console.log(`${count_films}) ${film.title}`);
+//         });
 
-            let count_elem = 0;
-            response.forEach(elem => {
-                count_elem += 1;
-                console.log(`${count_elem}) ${elem.name}....................ID: ${elem.id}`);
-            });
-            break;
+//     } else {
+//         figlet(`${category}`, {
+//             font: 'Small',
+//             horizontalLayout: 'full',
+//             verticalLayout: 'full'
+//         }, function(err, data) {
+//             if (err) {
+//                 console.log('Something went wrong...');
+//                 console.dir(err);
+//                 return;
+//             }
+//             console.log(data)
+//         });
+
+//         let count_elem = 0;
+//         response.forEach(elem => {
+//             count_elem += 1;
+//             console.log(`${count_elem}) ${elem.name}`);
+//         });
+
+//     }
+// };
+
+// Function will create a list of films, people, locations, species or vehicles
+// call thsi function if the user does not pass a keyword to search category
+// returns list to use with inquirer prompt
+const _createList = (response, category) => {
+    let listOfItems = [];
+    if (category === 'films') {
+        response.forEach(film => {
+            listOfItems.push(film.title);
+        });
+    } else {
+        response.forEach(elem => {
+            listOfItems.push(elem.name);
+        });
     }
-};
 
-// Helper that will create a list of ID depending on category chosen
-// Pass this to inquirer select prompt to find out more info on selected
-const _idList = (response) => {
-    let listOfId = [];
-    response.forEach(elem => {
-        listOfId.push(elem.id);
-    });
-    return listOfId;
+    return listOfItems;
 };
 
 // Allow user to search selected category item by id list and display info
@@ -195,9 +179,35 @@ const _selectItemInCategory = (listOfId) => {
     }]);
 };
 
+// gets studio ghibli films
+// Uses lowercase to allow user to search by keyword, gets one film based on id
+const _getItemId = (response, keyword, category) => {
+    let itemId = [];
+    if (category === 'films') {
+        response.forEach(film => {
+            const { id, title } = film;
+            const filmTitle = title.toLowerCase();
+            if (filmTitle.includes(keyword)) {
+                itemId.push(id);
+            }
+        });
+
+    } else {
+        response.forEach(item => {
+            const { id, name } = item;
+            const itemName = name.toLowerCase();
+            if (itemName.includes(keyword)) {
+                itemId.push(id);
+            }
+        });
+    }
+
+    return itemId;
+};
+
 // This function shall allow us to create a connection to Ghibli API
 // takes one parameter by default set to films, displays all films by Studio Ghibli
-async function search(category = 'films') {
+async function search(category = 'films', keyword = '') {
     // Banner 
     figlet('Studio Ghibli API', {
         font: 'Small',
@@ -217,25 +227,24 @@ async function search(category = 'films') {
     const baseUrlResponse = await superagent.get(choiceUrl);
     // loop through the response and display
     const itemsResponse = baseUrlResponse.body;
-    // Test
-    const test = _createDictionary(itemsResponse, category);
-    console.log(test);
 
-    //_displayId(itemsResponse, category)
+    if (keyword === '') {
+        const listOfItems = _createList(itemsResponse, category);
+        const selectItem = await _selectItemInCategory(listOfItems);
+        if (selectItem.item) {
+            const itemLower = selectItem.item.toLowerCase();
+            console.log(itemLower);
+        }
 
-    // Select Item in chosen category depenging on choice
-    // Create id list depending on chosen then prompt user
-    // const idList = _idList(itemsResponse);
-    // const selectedId = await _selectItemInCategory(idList);
-    // if (selectedId.item) {
-    //     // Open new connection to specified id info
-    //     // choice url keeps track of category 
-    //     const singleItemUrl = `${choiceUrl}/${selectedId.item}`;
-    //     const singleItemResponse = await superagent.get(singleItemUrl);
-    //     const singleItem = singleItemResponse.body;
-    //     // Call Info print helper for information 
-    //     _displayInformation(singleItem, category);
-    // }
+    } else {
+        const itemID = _getItemId(itemsResponse, keyword);
+        for (let i = 0; i < itemID.length; i++) {
+            const singleItemUrl = `${choiceUrl}/${itemID[i]}`;
+            const singleItemResponse = await superagent.get(singleItemUrl);
+            const singleItemBody = singleItemResponse.body;
+            _displayInformation(singleItemBody, category);
+        }
+    }
 
 };
 
