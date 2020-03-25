@@ -1,5 +1,5 @@
 const yargs = require('yargs');
-const ghibli_app = require('./ghibli_app.js');
+const app = require('./app.js');
 
 yargs
     .usage('$0: Usage node ghibli_cli.js <cmd> [option]')
@@ -14,7 +14,7 @@ yargs
                 });
         },
         handler: argv => {
-            ghibli_app.search(argv.category);
+            app.search(argv.category);
         }
     })
     // add a help menu to assist the user in understanding our CLI

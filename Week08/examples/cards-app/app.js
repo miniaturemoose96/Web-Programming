@@ -19,25 +19,23 @@ const _discardPrompt = async cards => {
     });
 
     // create an inquirer checkbox prompt
-    return inquirer.prompt([
-        {
-            type: 'checkbox',
-            name: 'cards',
-            message: 'select cards to throw away',
+    return inquirer.prompt([{
+        type: 'checkbox',
+        name: 'cards',
+        message: 'select cards to throw away',
 
-            // display the cards to the user for them to select
-            choices: displayCards,
+        // display the cards to the user for them to select
+        choices: displayCards,
 
-            // validate that the user picks less than 4 cards
-            validate: cards => {
-                if (cards.length > 4) {
-                    return 'You may only select up to four cards';
-                } else {
-                    return true;
-                }
+        // validate that the user picks less than 4 cards
+        validate: cards => {
+            if (cards.length > 4) {
+                return 'You may only select up to four cards';
+            } else {
+                return true;
             }
         }
-    ]);
+    }]);
 };
 
 // find and remove the throwaways from the original hand

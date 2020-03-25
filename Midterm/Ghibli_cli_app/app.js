@@ -2,6 +2,30 @@ const figlet = require('figlet'); // adds ascii art headers
 const superagent = require('superagent');
 const inquirer = require('inquirer');
 
+// Testing out if a dictionary is the answer to my problem
+// Focus only on using getting ID and TITLE/NAME keys from the objects
+// Save them in a dictionary with an easier title to search directly
+const _createDictionary = (response, category) => {
+    let objectList = []
+    if (category === 'films') {
+        response.forEach(film => {
+            const objItems = {};
+            const { id, title } = film;
+            objItems[title] = id;
+            objectList.push(objItems);
+        });
+    } else {
+        response.forEach(elem => {
+            const objItems = {};
+            const { id, name } = elem;
+            objItems[name] = id;
+            objectList.push(objItems);
+        });
+    }
+
+    return objectList;
+};
+
 // Helper to display data
 const _displayInformation = (response, category) => {
     switch (category) {
@@ -193,21 +217,25 @@ async function search(category = 'films') {
     const baseUrlResponse = await superagent.get(choiceUrl);
     // loop through the response and display
     const itemsResponse = baseUrlResponse.body;
-    _displayId(itemsResponse, category)
+    // Test
+    const test = _createDictionary(itemsResponse, category);
+    console.log(test);
+
+    //_displayId(itemsResponse, category)
 
     // Select Item in chosen category depenging on choice
     // Create id list depending on chosen then prompt user
-    const idList = _idList(itemsResponse);
-    const selectedId = await _selectItemInCategory(idList);
-    if (selectedId.item) {
-        // Open new connection to specified id info
-        // choice url keeps track of category 
-        const singleItemUrl = `${choiceUrl}/${selectedId.item}`;
-        const singleItemResponse = await superagent.get(singleItemUrl);
-        const singleItem = singleItemResponse.body;
-        // Call Info print helper for information 
-        _displayInformation(singleItem, category);
-    }
+    // const idList = _idList(itemsResponse);
+    // const selectedId = await _selectItemInCategory(idList);
+    // if (selectedId.item) {
+    //     // Open new connection to specified id info
+    //     // choice url keeps track of category 
+    //     const singleItemUrl = `${choiceUrl}/${selectedId.item}`;
+    //     const singleItemResponse = await superagent.get(singleItemUrl);
+    //     const singleItem = singleItemResponse.body;
+    //     // Call Info print helper for information 
+    //     _displayInformation(singleItem, category);
+    // }
 
 };
 
