@@ -11,10 +11,14 @@ yargs
                 .options('c', {
                     alias: 'category',
                     describe: 'use these categories: films, people, locations, species and vehicles.'
+                })
+                .options('k', {
+                    alias: 'keyword',
+                    describe: 'search categories using a keyword, try castle or totoro'
                 });
         },
         handler: argv => {
-            app.search(argv.category);
+            app.search(argv.category, argv.keyword);
         }
     })
     // add a help menu to assist the user in understanding our CLI
