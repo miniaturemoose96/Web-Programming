@@ -1,6 +1,6 @@
 const figlet = require('figlet'); // adds ascii art headers
-const superagent = require('superagent');
 const inquirer = require('inquirer');
+const Ghiblimodule = require('Ghibli_module');
 
 // Helper function to have a nice display of film objects
 const _displayFilmInformation = (response) => {
@@ -45,6 +45,14 @@ const _selectFilmInCategory = (listOfId) => {
     }]);
 };
 
+// Function uses inquirer to ask user if you need to see another movie details
+const _checkAnotherMovie = () => {
+    return inquirer.prompt([{
+        type: 'confirm',
+        name: 'film',
+        message: 'would you like to check out another Film?'
+    }]);
+};
 
 // gets studio ghibli films
 // Uses lowercase to allow user to search by keyword
@@ -67,7 +75,7 @@ const _getFilmByKeyword = (response, keyword) => {
 // takes one parameter by default set to films, displays all films by Studio Ghibli
 async function search(keyword = '') {
     // Banner 
-    figlet('Studio Ghibli API', {
+    figlet('Studio Ghibli Films', {
         font: 'Small',
         horizontalLayout: 'fitted',
         verticalLayout: 'fitted'
@@ -80,48 +88,61 @@ async function search(keyword = '') {
         console.log(data)
     });
 
-    // add to index js
-    const ghibli_base = 'https://ghibliapi.herokuapp.com/films';
-    const baseUrlResponse = await superagent.get(ghibli_base);
-    // loop through the response and display
-    const filmsResponse = baseUrlResponse.body;
-    const filmsList = _createFilmList(filmsResponse);
+    // Endpoint we are searching
+    // Will access all of studio ghibli films
+    const category = 'films';
 
-    // To check by keyword option
+    // get all movies from Studio Ghibli api
+    // This is our response from api
+    const allFilms = await Ghiblimodule.getAllFilms(category);
+    const filmList = _createFilmList(allFilms);
+
+    // Prompt
+    // Lets you choose a film and allows you to choose 
+    // see the film's description and more
     if (keyword === '') {
-        // Prompt
-        const selectFilm = await _selectFilmInCategory(filmsList);
+        const selectFilm = await _selectFilmInCategory(filmList);
 
         let id = '';
         // Get the ID of the film
         if (selectFilm.item) {
-            for (let i = 0; i < filmsResponse.length; i++) {
-                if (selectFilm.item === filmsResponse[i].title) {
-                    id = filmsResponse[i].id;
+            for (let i = 0; i < allFilms.length; i++) {
+                if (selectFilm.item === allFilms[i].title) {
+                    id = allFilms[i].id;
                 }
             }
         }
-        // Create new connection 
-        // Display Contents
-        const selectedfilmUrl = `${ghibli_base}/${id}`;
-        const selectedfilmResponse = await superagent.get(selectedfilmUrl);
-        const selectedFilmBody = selectedfilmResponse.body;
-        _displayFilmInformation(selectedFilmBody);
-    } else {
-        // Get list of those movie that contain the given keyword
-        const getIDlist = _getFilmByKeyword(filmsResponse, keyword);
-        if (getIDlist.length == 0) {
-            console.log(`No results for keyword --> ${keyword}`);
-        } else {
-            console.log(`Found ${getIDlist.length} result(s) for Keyword: ${keyword}`);
-            for (let i = 0; i < getIDlist.length; i++) {
-                // Construct url
-                const keyfoundUrl = `${ghibli_base}/${getIDlist[i]}`;
-                const keyfoundResponse = await superagent.get(keyfoundUrl);
-                const keyfoundBody = keyfoundResponse.body;
-                _displayFilmInformation(keyfoundBody);
-            }
 
+        const oneFilm = await Ghiblimodule.getOneFilm(id, category);
+        _displayFilmInformation(oneFilm)
+
+        // Ask user if they want to checkout another movie
+        const anotherFilm = await _checkAnotherMovie();
+        if (anotherFilm.film) {
+            const selectAnotherfilm = await _selectFilmInCategory(filmList);
+
+            let id = '';
+            // Get the ID of the film
+            if (selectAnotherfilm.item) {
+                for (let i = 0; i < allFilms.length; i++) {
+                    if (selectAnotherfilm.item === allFilms[i].title) {
+                        id = allFilms[i].id;
+                    }
+                }
+            }
+            const anotherFilm = await Ghiblimodule.getOneFilm(id, category);
+            _displayFilmInformation(anotherFilm);
+        }
+    } else {
+        const filmsWithKeyword = _getFilmByKeyword(allFilms, keyword);
+        if (filmsWithKeyword.length === 0) {
+            console.log(`No results for Keyword ---> ${keyword}`);
+        } else {
+            console.log(`Found ${filmsWithKeyword.length} result(s) for keyword: ${keyword}`);
+            for (let i = 0; i < filmsWithKeyword.length; i++) {
+                const getFilmsWithKeyword = await Ghiblimodule.getOneFilm(filmsWithKeyword[i], category);
+                _displayFilmInformation(getFilmsWithKeyword);
+            }
         }
     }
 };

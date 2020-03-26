@@ -1,0 +1,14 @@
+{
+  "name": "ghibli_module",
+  "version": "1.0.0",
+  "description": "Module for the Studio Ghibli API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alejandro Bernal",
+  "license": "MIT",
+  "dependencies": {
+    "superagent": "^5.2.2"
+  }
+}
