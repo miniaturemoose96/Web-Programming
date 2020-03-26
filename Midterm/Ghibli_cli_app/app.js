@@ -231,13 +231,21 @@ async function search(category = 'films', keyword = '') {
     if (keyword === '') {
         const listOfItems = _createList(itemsResponse, category);
         const selectItem = await _selectItemInCategory(listOfItems);
-        if (selectItem.item) {
-            const itemLower = selectItem.item.toLowerCase();
-            console.log(itemLower);
+        if (category === 'films' && selectItem.item) {
+            itemsResponse.forEach(film => {
+                if (film.title.includes(selectItem.item)) {
+                    console.log(film.id);
+                }
+            });
+        } else {
+            itemsResponse.forEach(item => {
+                if (item.name.includes(selectItem.item)) {
+                    console.log(item.id);
+                }
+            });
         }
-
     } else {
-        const itemID = _getItemId(itemsResponse, keyword);
+        const itemID = _getItemId(itemsResponse, keyword, category);
         for (let i = 0; i < itemID.length; i++) {
             const singleItemUrl = `${choiceUrl}/${itemID[i]}`;
             const singleItemResponse = await superagent.get(singleItemUrl);
