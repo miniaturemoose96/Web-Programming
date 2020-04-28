@@ -1,0 +1,15 @@
+{
+  "name": "requests-cli-app",
+  "version": "1.0.0",
+  "description": "a simple cli that makes requests to a local express server",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alejandro Bernal",
+  "license": "ISC",
+  "dependencies": {
+    "superagent": "^5.2.2",
+    "yargs": "^15.3.1"
+  }
+}

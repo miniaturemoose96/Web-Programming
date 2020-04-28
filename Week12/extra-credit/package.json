@@ -1,0 +1,18 @@
+{
+    "name": "extra-credit",
+    "version": "1.0.0",
+    "description": "Simple CLI making use of weather.gov API.",
+    "main": "cli.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Alejandro Bernal",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "inquirer": "^7.1.0",
+        "superagent": "^5.2.2",
+        "yargs": "^15.3.1"
+    }
+}
