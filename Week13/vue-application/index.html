@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Grocery List App</title>
+    <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <section id='grocery-app'>
+        <div class="container">
+            <header class="text-center">
+                <h2>Grocery Store Items</h2>
+            </header>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="form-control" placeholder="Item to purchase?" v-model="newItem" @keyup.enter="addItem" />
+                    <section v-show="items.length">
+                        <ul class="list-group">
+                            <li v-for="item in items" class="list-group-item">
+                                <input type="checkbox" v-model="item.isInCart" class="form-check-input" />
+                                <label v-bind:style="item.isInCart ? 'text-decoration: line-through;' : 'text-decoration: none;' ">{{ item.title }}</label>
+                                <button class="btn btn-sm btn-danger" style="float: right" @click="removeItem(item)">
+                                    remove
+                                </button>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <span>Still Shopping For: {{ stillShopping }} items</span>
+                        <span style="float: right;">In Cart: {{ inCart }}</span>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const app = new Vue({
+            el: '#grocery-app',
+            data: {
+                items: [],
+                newItem: ""
+            },
+
+            computed: {
+                stillShopping: function() {
+                    const shopping = this.items.filter(function(item) {
+                        return !item.isInCart;
+                    });
+
+                    return shopping.length;
+                },
+
+                inCart: function() {
+                    const cart = this.items.filter(function(item) {
+                        return item.isInCart;
+                    });
+                    return cart.length;
+                }
+            },
+
+            methods: {
+                addItem: function() {
+                    const value = this.newItem.trim();
+
+                    if (!value) {
+                        return;
+                    }
+
+                    this.items.push({
+                        title: value,
+                        isInCart: false
+                    });
+
+                    this.newItem = '';
+                },
+
+                removeItem: function(item) {
+                    // filter by title
+                    this.items = this.items.filter(elem => {
+                        return elem.title != item.title;
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

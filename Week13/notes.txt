@@ -1,0 +1,19 @@
+Introduction to vue.js
+
+What is Vue.js?
+-Progressive JavaScript frontend Framework for building user interfaces
+-Approchable, Uses HTML and interacts with the browser and css and JavaScript
+-versatile, Vue can be capable of powering Single page applications to 
+sophisticated Web applications
+-Perfomant, Arounf 30k min + gzip really faster then Angular and React
+
+DOM Virtualization
+-Dom updates expensive, Blocks user
+VUE.js uses Virtual DOM
+-Lightweight, copy of the actual DOM
+-Vue Efficiently determine what needs to be updated
+-Batch updates the DOM
+
+
+
+
