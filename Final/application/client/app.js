@@ -16,19 +16,6 @@ const movies = new Vue({
         // catalog size
         catalogSize: function() {
             return this.films.length;
-        },
-        displayMovieSearch: function() {
-            const movie = this.searchedMovie.toLowerCase();
-            if (!movie) {
-                return;
-            }
-
-            this.films = this.films.filter(film => {
-                const filmTitle = film.title.toLowerCase();
-                return filmTitle.includes(movie);
-            });
-
-            this.searchedMovie = '';
         }
     },
     methods: {
@@ -44,6 +31,19 @@ const movies = new Vue({
             const response = await axios.get('http://localhost:8888/api/images');
             this.images = response.data;
             console.log(this.images);
+        },
+        displayMovieSearch: function() {
+            const movie = this.searchedMovie.toLowerCase();
+            if (!movie) {
+                return;
+            }
+
+            this.films = this.films.filter(film => {
+                const filmTitle = film.title.toLowerCase();
+                return filmTitle.includes(movie);
+            });
+
+            this.searchedMovie = '';
         }
     }
 })
