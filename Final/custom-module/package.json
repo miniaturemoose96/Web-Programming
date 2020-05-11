@@ -1,0 +1,14 @@
+{
+  "name": "custom-module",
+  "version": "1.0.0",
+  "description": "Module to get http request from studio ghibli api.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alejandro Bernal",
+  "license": "MIT",
+  "dependencies": {
+    "superagent": "^5.2.2"
+  }
+}

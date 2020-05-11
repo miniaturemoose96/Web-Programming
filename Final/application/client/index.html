@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Studio Ghibli App</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+</head>
+
+<body>
+    <div id="ghibliMovies" v-cloak>
+        <!-- Application Title and tagline-->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg">
+                    <h1 class="display-2">{{ appName }}</h1>
+                    <p class="lead">Information on Studio Ghibli's Movies, Characters and More!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Nav Bar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" @click="getFilms" v-on:click="isHidden = true" href="#"> Films </a>
+                        </li> -->
+                    </ul>
+                    <form class="form-inline">
+                        <input type="text" class="form-control" placeholder="Search for Movie" v-model="searchedMovie" @keyup.enter="displayMovieSearch" aria-label="Search">
+                    </form>
+                </div>
+            </nav>
+
+            <div v-cloak class=" container ">
+                <div class="row ">
+                    <div class="col-lg ">
+                        <!-- Default display should disapear when option is chosen by user -->
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12 mt-3">
+                                    <div class="card">
+                                        <div style="display: flex; flex: 1 1 auto;">
+                                            <div class="img-square-wrapper">
+                                                <img src="movie-img/ghibli_logo.jpg" alt="logo" style="width:500px;height:400px;" />
+                                            </div>
+                                            <div class="card-body">
+                                                <h2 class="card-title"> WELCOME! </h2>
+                                                <p class="card-text"> This vue application allows you to search the Studio Ghibli API. To get started you can click the "Films" category on the navigation bar or you may use the search bar to look for a specific movie!</p>
+                                                <h2> Size of Movie Catalog: {{catalogSize}} </h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Display movie poster images -->
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12 mt-3">
+                                    <div class="card" v-for="movie in films">
+                                        <div style="display: flex; flex: 1 1 auto;">
+                                            <div class="img-square-wrapper">
+                                                <img v-for="img in images" v-if="movie.id === img.id" v-bind:src="img.src" style="width: 200px; height: 200px" alt="mov-image" />
+                                            </div>
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ movie.title }} ({{ movie.release_date }}) <span class="float-right">Rating: {{movie.rt_score}}</span></h2>
+                                                <p class="card-text">{{ movie.description }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://unpkg.com/vue@2.6.11/dist/vue.js "></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js "></script>
+        <script src="app.js " type="text/javascript "></script>
+    </div>
+</body>
+
+</html>
