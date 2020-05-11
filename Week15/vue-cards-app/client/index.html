@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Deck of Cards Demo App</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <div id="cards" v-cloak>
+        <div class="jumbotron jumbotron-fluid">
+            <!-- Application Title and tagline-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg">
+                        <h1 class="display-2">{{ appName }}</h1>
+                        <p class="lead">deck of cards vue.js app</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-cloak class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Computed Remaining Cards Count-->
+                    <div class="row">
+                        <h5>Remaining Cards: {{ remainingCards }}</h5>
+                    </div>
+
+                    <!-- Deck of Cards Play Button-->
+                    <div class="row" v-show="!deck.cards">
+                        <button @click="playGame" class="btn btn-dark">Play</button>
+                    </div>
+
+                    <!-- Show 5 Card Hand When Playing-->
+                    <div class="row">
+                        <div class="col" v-for="card in deck.cards">
+                            <img v-bind:src="card.image" width="70%" />
+                            <p>
+                                <input id="card.code" v-if="deck.cards && isPlaying" v-model="selectedCards" type="checkbox" :value="card.code" />
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Show Appropriate Button When Playing-->
+                    <div class="row">
+                        <button v-if="deck.cards && isPlaying" @click="throwaway" class="btn btn-dark">
+                                Throwaway
+                            </button>
+                        <button v-if="deck.cards && !isPlaying" @click="clear" class="btn btn-dark">
+                                Clear
+                            </button>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- Vue Component for Timestamps -->
+                    <tracker-component v-bind:game-tracker="gameTracker"></tracker-component>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</body>
+
+</html>
