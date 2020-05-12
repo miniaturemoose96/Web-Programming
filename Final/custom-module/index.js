@@ -9,7 +9,6 @@ const getAllFilms = async category => {
     const filmsBody = filmUrlResponse.body;
 
     return filmsBody;
-
 };
 
 // function that gets single film from given id

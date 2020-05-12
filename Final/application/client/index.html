@@ -28,9 +28,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                     </ul>
-                    <form class="form-inline">
-                        <input type="text" placeholder="Search for Movie" v-model="movieSearched" @keyup.enter="searchCatalog" aria-label="Search">
-                    </form>
+                    <div class="form-inline my-2 my-lg-0">
+                        <input type="text" class="form-control mr-sm-2" placeholder="Search for Movie" v-model="movieSearched" aria-label="Search">
+                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0" v-on:click="searchMovies">Search</button>
+                    </div>
                 </div>
             </nav>
 
@@ -49,35 +50,29 @@
                                             <div class="card-body">
                                                 <h2 class="card-title"> WELCOME! </h2>
                                                 <p class="card-text"> This vue application allows you to search the Studio Ghibli API. To get started you can click the "Films" category on the navigation bar or you may use the search bar to look for a specific movie!</p>
-                                                <h2> Size of Movie Catalog: {{catalogSize}} Results </h2>
+                                                <h2> Found: {{ numOfMovies }} Result(s) </h2>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <!-- When User makes search -->
-                        <!-- Display movie title and image -->
-                        <!-- <div class="container-fluid">
+                        <!-- Display movie title -->
+                        <div class="container-fluid">
                             <div class="row">
-                                <div class="col-12 mt-3" v-for="film in filteredFilmList">
-                                    <a href="/api/movie" v-model="selectedMovie" @click="selectedMovie = film.id">
-                                        <div class="card">
-                                            <h1>{{ film.title }}</h1>
-                                            <input type="radio" v-model="selectedMovie" :value="film.id" />
-                                            <button type="submit" v-model="selectedMovie" :value="film.id"> TEST </button>
-                                        </div>
-                                    </a>
+                                <div class="col-12 mt-3" v-for="film in films">
+                                    <!-- <a href="/api/movie" v-model="selectedMovie" @click="selectedMovie = film.id"></a> -->
+                                    <div class="card">
+                                        <h1>{{ film.title }}</h1>
+                                        <!-- <input type="radio" v-model="selectedMovie" :value="film.id" />
+                                        <button type="submit" v-model="selectedMovie" :value="film.id"> TEST </button> -->
+                                    </div>
                                 </div>
-
-                            </div>
-                        </div> -->
-
-                        <div class="container">
-                            <div class="row">
-                                <p>TEST: {{ movieSearched }}</p>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

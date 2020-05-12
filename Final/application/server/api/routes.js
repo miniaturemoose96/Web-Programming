@@ -5,30 +5,22 @@ const router = express.Router();
 // studio ghibli module
 const ghibli = require('custom-module');
 
-router.get('/catalog', async(req, res) => {
-    // Endpoint to get all studio ghibli movies
+// get all films, use param to filter list and search
+router.get('/movies/:title', async(req, res) => {
     const category = 'films';
+    const { title } = req.params;
 
     try {
+        // filter base on what the user inputs
         const movies = await ghibli.getAllFilms(category);
-        res.json(movies);
+        res.send(movies.filter(movie => {
+            if (movie.title.toLowerCase().includes(title.toLowerCase())) {
+                return movie;
+            }
+        }));
     } catch (err) {
-        res.json({ err });
+        res.send({ err })
     }
-});
-
-// Passing data to our router
-router.post('/movie', async(req, res) => {
-    const category = 'films';
-    // I need ID from the front end
-    const { id } = req.body;
-    try {
-        const oneFilmUrl = await ghibli.getOneFilm(id, category);
-        res.json(oneFilmUrl);
-    } catch (err) {
-        res.json({ err });
-    }
-
 });
 
 // For the images

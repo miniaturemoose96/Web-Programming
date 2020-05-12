@@ -6,46 +6,22 @@ const movies = new Vue({
         movieSearched: '',
         films: [],
         images: [],
-        filteredFilms: [],
-        oneFilm: {}
     },
     mounted() {
         // Load the json information for my images
         this.getImageInfo();
-        this.getFilms();
     },
     computed: {
-        // catalog size
-        catalogSize: function() {
-            return this.filteredFilms.length;
-        },
-        // filter during search
-        // This holds all films and information
-        // filteredFilmList: function() {
-        //     return this.films.filter(film => {
-        //         return film.title.toLowerCase().includes(this.movieSearched.toLowerCase());
-        //     });
-        // }
+        numOfMovies: function() {
+            return this.films.length;
+        }
     },
     methods: {
-        searchCatalog: function() {
+        searchMovies: async function() {
+            const response = await axios.get(`/api/movies/${this.movieSearched}`);
+            const result = response.data;
 
-        },
-        getFilms: async function() {
-            // make an http request from server
-            const response = await axios.get('http://localhost:8888/api/catalog');
-            this.films = response.data;
-            // Access images info and check equality with id's to display image and title
-            console.log(this.films);
-        },
-        // Make fucntion that gets movies by id
-        // this will call response from routes to function that returns movie by id
-        getOneFilm: async function() {
-            const response = await axios.post('http://localhost:8888/api/movie', {
-                id: this.selectedMovie
-            });
-            this.oneFilm = response.data;
-            console.log(this.oneFilm)
+            this.films = result;
         },
         getImageInfo: async function() {
             // Sets images of all the movies
