@@ -24,11 +24,9 @@
 
         <div class="container">
             <!-- Nav Bar -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" v-show="canSearch">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                    </ul>
-                    <div class="form-inline my-2 my-lg-0" v-show="canSearch">
+                    <div class="form-inline my-2 my-lg-0">
                         <input type="text" class="form-control mr-sm-2" placeholder="Search for Movie" v-model="movieSearched" aria-label="Search">
                         <button type="submit" class="btn btn-outline-success my-2 my-sm-0" v-on:click="searchMovies(); canSearch = !canSearch">Search</button>
                     </div>
@@ -45,13 +43,22 @@
                                     <div class="card">
                                         <div style="display: flex; flex: 1 1 auto;">
                                             <div class="img-square-wrapper">
-                                                <img src="movie-img/ghibli_logo.jpg" alt="logo" style="width:500px;height:400px;" />
+                                                <img src="movie-img/ghibli_logo.jpg" width="600px" alt="logo" style="max-width:100%; height:auto;" />
                                             </div>
                                             <div class="card-body">
                                                 <h2 class="card-title"> WELCOME! </h2>
-                                                <p class="card-text"> This vue application allows you to search the Studio Ghibli API. To get started you can click the "Films" category on the navigation bar or you may use the search bar to look for a specific movie!</p>
+                                                <p class="card-text"> This vue application allows you to search the Studio Ghibli API. To get started you can search for any of your favorite Studio Ghibli movie using their <b>Title</b>, on the search bar at the top.</p>
+                                                <p class="card-text"> Use the <b>New Search</b> button to create a new search after you are done with one.</p>
+                                                <p class="card-text">
+                                                    Cannot think of any? Try searching one of these classics:
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item"> Spirited Away </li>
+                                                        <li class="list-group-item"> Princess Mononoke </li>
+                                                        <li class="list-group-item"> My Neighbor Totoro </li>
+                                                    </ul>
+                                                </p>
                                                 <h2> Found: {{ numOfMovies }} Result(s) </h2>
-                                                <button type="button" class="btn btn-success"> Back to results </button>
+                                                <button type="button" class="btn btn-success" v-on:click="backToResults"> Back to results </button>
                                                 <button type="button" class="btn btn-success" v-on:click="newSearch"> New Search </button>
                                             </div>
                                         </div>
@@ -86,7 +93,7 @@
                                     <div class="card" v-model="oneFilm">
                                         <div style="display: flex; flex: 1 1 auto;">
                                             <div class="img-square-wrapper">
-                                                <img class="img-thumbnail" v-for="img in images" v-if="oneFilm.id === img.id" v-bind:src="img.src" style="width: 600px; height: 200px;" alt="mov-img">
+                                                <img v-for="img in images" v-if="oneFilm.id === img.id" v-bind:src="img.src" width="400" style="max-width:100%; height:auto;" alt="mov-img">
                                             </div>
                                             <div class="card-body">
                                                 <h2 class="card-title">{{ oneFilm.title }}</h2>

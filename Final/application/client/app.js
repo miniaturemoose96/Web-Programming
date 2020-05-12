@@ -40,10 +40,18 @@ const movies = new Vue({
             console.log(this.images);
         },
         newSearch: function() {
+            // set all variables back to default case
             this.canSearch = true;
             this.resultsVisible = true;
             this.films = [];
             this.oneFilm = [];
+        },
+        backToResults: function() {
+            // set only one film back to default 
+            // that way if the user selects another film in 
+            // populates its correctly
+            this.oneFilm = [];
+            this.resultsVisible = true;
         }
     }
 })
