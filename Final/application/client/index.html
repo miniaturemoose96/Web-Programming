@@ -7,6 +7,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
 
 </head>
 
@@ -62,16 +63,44 @@
                         <!-- Display movie title -->
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-12 mt-3" v-for="film in films">
-                                    <!-- <a href="/api/movie" v-model="selectedMovie" @click="selectedMovie = film.id"></a> -->
-                                    <div class="card">
-                                        <h1>{{ film.title }}</h1>
-                                        <!-- <input type="radio" v-model="selectedMovie" :value="film.id" />
-                                        <button type="submit" v-model="selectedMovie" :value="film.id"> TEST </button> -->
+                                <div class="col-12 mt-3" v-show="visible">
+
+                                    <div class="card" v-for="film in films">
+                                        <div style="display: flex; flex: 1 1 auto;">
+                                            <div class="img-square-wrapper">
+
+                                                <button type="submit" class="btn btn-success btn-circle btn-xl" v-model="movieSelected = film.id" v-on:click="selectMovie(); visible = false">Select</button>
+                                                <!-- <img class="img-thumbnail" v-for="img in images" v-if="film.id === img.id" v-bind:src="img.src" style="width: 200px; height: 200px;" alt="mov-img"> -->
+
+                                            </div>
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ film.title }} ({{ film.release_date }})<span class="float-right">Rating: {{film.rt_score}}</span></h2>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Display single Movie information and picture that goes along with movie -->
+                        <!-- <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12 mt-3">
+                                    <div class="card" v-for="">
+                                        <div style="display: flex; flex: 1 1 auto;">
+                                            <div class="img-square-wrapper">
+                                                <img class="img-thumbnail" v-for="img in images" v-if=".id === img.id" v-bind:src="img.src" style="width: 200px; height: 200px;" alt="mov-img">
+                                            </div>
+                                            <div class="card-body">
+                                                <h2 class="card-title">{{ film}}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div> -->
 
                     </div>
                 </div>

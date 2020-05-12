@@ -3,8 +3,11 @@ const movies = new Vue({
     el: '#ghibliMovies',
     data: {
         appName: 'Ghibli-a-Holic',
+        visible: true,
         movieSearched: '',
+        movieSelected: '',
         films: [],
+        oneFilm: {},
         images: [],
     },
     mounted() {
@@ -22,6 +25,14 @@ const movies = new Vue({
             const result = response.data;
 
             this.films = result;
+            this.movieSearched = '';
+        },
+        selectMovie: async function() {
+            const response = await axios.get(`/api/one-movie/${this.movieSelected}`)
+            const result = response.data;
+
+            this.oneFilm = result;
+            console.log(this.oneFilm);
         },
         getImageInfo: async function() {
             // Sets images of all the movies

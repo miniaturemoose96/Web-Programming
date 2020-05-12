@@ -23,6 +23,19 @@ router.get('/movies/:title', async(req, res) => {
     }
 });
 
+// get one film passing ID to display all information about the film
+router.get('/one-movie/:id', async(req, res) => {
+    const category = 'films';
+    const { id } = req.params;
+
+    try {
+        const oneMovie = await ghibli.getOneFilm(id, category);
+        res.send(oneMovie);
+    } catch (err) {
+        res.send({ err });
+    }
+});
+
 // For the images
 router.get('/images', function(req, res) {
     try {
