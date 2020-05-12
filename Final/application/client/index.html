@@ -7,7 +7,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="style.css" />
 
 </head>
 
@@ -29,9 +28,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                     </ul>
-                    <div class="form-inline my-2 my-lg-0">
+                    <div class="form-inline my-2 my-lg-0" v-show="canSearch">
                         <input type="text" class="form-control mr-sm-2" placeholder="Search for Movie" v-model="movieSearched" aria-label="Search">
-                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0" v-on:click="searchMovies">Search</button>
+                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0" v-on:click="searchMovies(); canSearch = !canSearch">Search</button>
                     </div>
                 </div>
             </nav>
@@ -52,6 +51,8 @@
                                                 <h2 class="card-title"> WELCOME! </h2>
                                                 <p class="card-text"> This vue application allows you to search the Studio Ghibli API. To get started you can click the "Films" category on the navigation bar or you may use the search bar to look for a specific movie!</p>
                                                 <h2> Found: {{ numOfMovies }} Result(s) </h2>
+                                                <button type="button" class="btn btn-success"> Back to results </button>
+                                                <button type="button" class="btn btn-success" v-on:click="newSearch"> New Search </button>
                                             </div>
                                         </div>
                                     </div>
@@ -63,18 +64,13 @@
                         <!-- Display movie title -->
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-12 mt-3" v-show="visible">
+                                <div class="col-12 mt-3" v-show="resultsVisible">
 
                                     <div class="card" v-for="film in films">
                                         <div style="display: flex; flex: 1 1 auto;">
-                                            <div class="img-square-wrapper">
-
-                                                <button type="submit" class="btn btn-success btn-circle btn-xl" v-model="movieSelected = film.id" v-on:click="selectMovie(); visible = false">Select</button>
-                                                <!-- <img class="img-thumbnail" v-for="img in images" v-if="film.id === img.id" v-bind:src="img.src" style="width: 200px; height: 200px;" alt="mov-img"> -->
-
-                                            </div>
                                             <div class="card-body">
                                                 <h2 class="card-title">{{ film.title }} ({{ film.release_date }})<span class="float-right">Rating: {{film.rt_score}}</span></h2>
+                                                <button type="button" class="btn btn-success" v-on:click="selectMovie(film.id); resultsVisible = !resultsVisible">Select</button>
                                             </div>
                                         </div>
                                     </div>
@@ -84,23 +80,28 @@
                         </div>
 
                         <!-- Display single Movie information and picture that goes along with movie -->
-                        <!-- <div class="container-fluid">
+                        <div class="container-fluid" v-show="oneFilm.length != 0">
                             <div class="row">
                                 <div class="col-12 mt-3">
-                                    <div class="card" v-for="">
+                                    <div class="card" v-model="oneFilm">
                                         <div style="display: flex; flex: 1 1 auto;">
                                             <div class="img-square-wrapper">
-                                                <img class="img-thumbnail" v-for="img in images" v-if=".id === img.id" v-bind:src="img.src" style="width: 200px; height: 200px;" alt="mov-img">
+                                                <img class="img-thumbnail" v-for="img in images" v-if="oneFilm.id === img.id" v-bind:src="img.src" style="width: 600px; height: 200px;" alt="mov-img">
                                             </div>
                                             <div class="card-body">
-                                                <h2 class="card-title">{{ film}}</h2>
+                                                <h2 class="card-title">{{ oneFilm.title }}</h2>
+                                                <p class="card-text"><b>Release Year:</b> {{ oneFilm.release_date }}</p>
+                                                <p class="card-text"><b>Rating Score:</b> {{ oneFilm.rt_score }}</p>
+                                                <p class="card-text"><b>Director:</b> {{ oneFilm.director }}</p>
+                                                <p class="card-text"><b>Producer:</b> {{ oneFilm.producer }}</p>
+                                                <p class="card-text"><b>Synopsis:</b><br>{{ oneFilm.description }}</p>
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
 
                     </div>
                 </div>
