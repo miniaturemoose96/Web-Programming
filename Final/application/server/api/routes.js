@@ -17,17 +17,18 @@ router.get('/catalog', async(req, res) => {
     }
 });
 
-router.get('/movie', async(req, res) => {
-    // How do I get ID here from 
-    const id = '2baf70d1-42bb-4437-b551-e5fed5a87abe';
+// Passing data to our router
+router.post('/movie', async(req, res) => {
     const category = 'films';
-
+    // I need ID from the front end
+    const { id } = req.body;
     try {
-        const movie = await ghibli.getOneFilm(id, category);
-        res.json(movie);
+        const oneFilmUrl = await ghibli.getOneFilm(id, category);
+        res.json(oneFilmUrl);
     } catch (err) {
         res.json({ err });
     }
+
 });
 
 // For the images
