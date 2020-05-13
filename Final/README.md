@@ -7,17 +7,17 @@ The application folder holds the client side and server side logic for the appli
 
 #### Dependencies
 To get started install depenendencies in the *server* folder, once inside the server folder:
-    * **npm install**
+* **npm install**
 
 Now that all dependencies are set, start up *server.js* inside the server folder.
-    * **node server.js**
+* **node server.js**
 
 Sever is running port: **8888** open on your prefered browser.
-    * http://localhost:8888
+* http://localhost:8888
 
 #### **custom-module**
 The custom-module consists of the midterm module that was created to request content from the Studio Ghibli API.
 
 #### Dependencies
 To get started insatll dependencies in the *custom-modules* folder, once inside the folder:
-    * **npm install**
+* **npm install**
