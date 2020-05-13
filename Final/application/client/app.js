@@ -2,8 +2,8 @@
 const searchHistoryComponent = {
     template: ` <div>
                     <div class="col" v-for="film in searchHistory">
-                    <ul>
-                        <li>
+                    <ul class="list-group">
+                        <li class="list-group-item">
                             <small>
                                 You selected: {{ film.selected }}
                                 <br/>
@@ -60,7 +60,13 @@ const movies = new Vue({
         },
         trackHistory: function() {
             const date = new Date().toLocaleString('en-US');
-            // Push history
+
+            // if empty string do nothing 
+            if (!this.oneFilm.title) {
+                return;
+            }
+
+            //  else Push history
             this.searchHistory.push({
                 selected: this.oneFilm.title,
                 timestamp: date,
