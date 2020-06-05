@@ -1,18 +1,12 @@
 /**
- *  Problem 1
+ *  Problem 1:
+ *  Remove the x's from phrase
  * 
  */
-function removeLetters(phrase, letter) {
-    let replace = "";
-    for (let i = 0; i < phrase.length; i++) {
-        if (phrase.includes(letter)) {
-            replace = phrase.split(letter);
-            replace = replace.join("");
-        }
-    }
-    replace = replace.toString();
-    return replace;
-}
+const removeLetters = (phrase, letter) => {
+    let replaced = phrase.split(letter);
+    return replaced.join('');
+};
 
 const phrase = 'helxlo x worxxld';
 const letter = 'x';
@@ -20,10 +14,13 @@ const letter = 'x';
 console.log(removeLetters(phrase, letter));
 
 /**
- *  Problem 2
+ *  Problem 2:
+ *  Write a funtion called flattenArray(10pts)
+ *  The flattenArray function accepts a nested array as an argument.
+ *  This function will turn the nested array of arrays and return the flat array.
  * 
  */
-function flattenArray(nested) {
+const flattenArray = (nested) => {
     let new_array = [];
     for (let i = 0; i < nested.length; i++) {
         for (let j = 0; j < nested[i].length; j++) {
@@ -31,7 +28,7 @@ function flattenArray(nested) {
         }
     }
     return new_array;
-}
+};
 
 const nested = [
     [1, 2],
@@ -43,35 +40,26 @@ const nested = [
 console.log(flattenArray(nested));
 
 /**
- *  Problem 3
+ *  Problem 3:
+ *  Write a function called adjustName().
+ *  The adjustName function accepts an object as an argument.
+ *  This function will remove the key 'name' and add two new keys 'firstName' and 'lastName' and return the object.
+ *  It will set the values of 'firstName' and 'lastName' correctly based on the values in the 'name' array.
+ *  You may assume that the first item in the 'name' array is the first name and that the last item is the last name.
+ *  Consider some people have multiple middle names so the last item in the array **MUST** be accessed dynamically.**DO NOT** use iterations.
  * 
  */
+const adjustName = (obj) => {
+    const first = obj.name[0];
+    const last = obj.name[obj.name.length - 1];
 
-function adjustName(company) {
+    // Create the new object 
+    obj.firstName = first;
+    obj.lastName = last;
+    delete obj.name;
 
-    if (company.name.length === 3) {
-        const lastElem = company.name.length - 1;
-        let fname = company.name[0];
-        let lName = company.name[lastElem];
-
-        company.firstName = fname;
-        company.lastName = lName;
-
-        delete company.name;
-
-    } else {
-
-        let fname = company.name[0];
-        let lName = company.name[1];
-
-        company.firstName = fname;
-        company.lastName = lName;
-
-        delete company.name;
-    }
-
-    return company;
-}
+    return obj;
+};
 
 const dc = {
     name: ['Bruce', 'Wayne'],
