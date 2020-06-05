@@ -14,7 +14,7 @@ const newHeros = heros.map((eachHero, index) => {
     eachHero.hero = name;
     delete eachHero.name;
     return eachHero;
-})
+});
 
 console.log("----PROBLEM 1----");
 console.log(newHeros);
@@ -34,7 +34,7 @@ const getNintendoConsoles = consoles.filter(product => {
     if (product.item.toLowerCase().includes(manufacturer)) {
         return product;
     }
-})
+});
 
 console.log("----PROBLEM 2----");
 console.log(getNintendoConsoles);
