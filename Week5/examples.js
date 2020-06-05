@@ -68,7 +68,7 @@ const makeFoodCallbacks = foods => {
     });
 }
 
-//makeFoodCallbacks(foods);
+makeFoodCallbacks(foods);
 
 // PROMISES
 // Creating a function with a Promise
@@ -88,23 +88,23 @@ const cookingWithPromises = food => {
 }
 
 // Using a Promise
-// cookingWithPromises({ name: 'popcorn', time: 2000 }).then(result => {
-//     console.log(result);
-// })
+cookingWithPromises({ name: 'popcorn', time: 2000 }).then(result => {
+    console.log(result);
+})
 
 // Lopping with Promises
 const makeFoodPromises = foods => {
-        foods.forEach(food => {
-            cookingWithPromises(food)
-                .then(result => {
-                    console.log(result);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        })
-    }
-    //makeFoodPromises(foods)
+    foods.forEach(food => {
+        cookingWithPromises(food)
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    })
+}
+makeFoodPromises(foods)
 
 // Promise.all with Promises (Special Error Cases)
 const makeFoodPromisesAll = foods => {
@@ -123,7 +123,7 @@ const makeFoodPromisesAll = foods => {
 // Rejects sees one rejection and ignoreas everything else
 // You cannot catch in this makeFoodPromisesALL function
 // Handel catch ccase before hand 
-//makeFoodPromisesAll(foods);
+makeFoodPromisesAll(foods);
 
 // ASYNC/AWAIT
 // Using a Promise function with async/await
@@ -138,4 +138,4 @@ const makeFoodAsync = foods => {
     })
 }
 
-//makeFoodAsync(foods);
+makeFoodAsync(foods);
